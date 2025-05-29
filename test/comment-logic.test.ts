@@ -229,6 +229,21 @@ describe("updateCommentBody", () => {
       expect(result).toContain("[Create a PR](not-a-valid-url-at-all)");
       expect(result).toContain("This PR was created.");
     });
+
+    it("handles PR links ending with encoded parentheses from prLink parameter", () => {
+      const urlWithEncodedParens =
+        "https://github.com/sk1010k/transcribe/compare/main...claude/issue-2-20250529_101712?quick_pull=1&title=Issue%20%232%3A%20Changes%20from%20Claude&body=This%20PR%20addresses%20issue%20%232%0A%0AGenerated%20with%20%5BClaude%20Code%5D(https%3A%2F%2Fclaude.ai%2Fcode)";
+      const input = {
+        ...baseInput,
+        currentBody: "Work completed successfully.",
+        prLink: `\n[Create a PR](${urlWithEncodedParens})`,
+      };
+
+      const result = updateCommentBody(input);
+      // Should include the full URL including the encoded closing parenthesis
+      expect(result).toContain(`• [Create PR ➔](${urlWithEncodedParens})`);
+      expect(result).toContain("Work completed successfully.");
+    });
   });
 
   describe("execution details", () => {
