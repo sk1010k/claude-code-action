@@ -46,7 +46,7 @@ export function buildAllowedToolsString(
     baseTools.push("mcp__github__update_pull_request_comment");
   } else {
     // For all other events (issue comments, PR reviews, issues), use issue comment tool
-    baseTools.push("mcp__github__update_issue_comment");
+    baseTools.push("mcp__github__update_issue");
   }
 
   let allAllowedTools = baseTools.join(",");
