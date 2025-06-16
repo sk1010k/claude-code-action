@@ -190,5 +190,9 @@ export function updateCommentBody(input: CommentUpdateInput): string {
   // Add the cleaned body content
   newBody += bodyContent;
 
+  if (executionDetails?.result !== undefined) {
+    newBody += executionDetails.result;
+  }
+
   return newBody.trim();
 }
