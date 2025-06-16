@@ -157,11 +157,12 @@ async function run() {
         if (Array.isArray(outputData) && outputData.length > 0) {
           const lastElement = outputData[outputData.length - 1];
           if (
-            lastElement.role === "system" &&
+            (lastElement.role === "system" || lastElement.type == "result") &&
             "cost_usd" in lastElement &&
             "duration_ms" in lastElement
           ) {
             executionDetails = {
+              result: lastElement.result,
               cost_usd: lastElement.cost_usd,
               duration_ms: lastElement.duration_ms,
               duration_api_ms: lastElement.duration_api_ms,
